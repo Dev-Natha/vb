@@ -1,0 +1,322 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Betting HTML Template</title>
+    <!--Shortcut Icon-->
+    <link rel="icon" href="assets/img/logo/favicon.png">
+    <!--Bootstrap Min Css-->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <!--Macnific Popup Css-->
+    <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+    <!--Owl Carousel min Css-->
+    <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+    <!--Owl theme Default Css-->
+    <link rel="stylesheet" href="{% static 'assets/css/owl.theme.default.css' %}">
+    <!--nice select Css-->
+    <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
+    <!--Glyphter Css-->
+    <link rel="stylesheet" href="{% static 'assets/glyphter-font/css/Glyphter.css' %}">
+    <!--animation Css-->
+    <link rel="stylesheet" href="{% static 'assets/css/animate.css' %}">
+    <!--Fontawsome all min Css-->
+    <link rel="stylesheet" href="{% static 'assets/css/all.min.css' %}">
+    <!--Main custom Css-->
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+    <!--Custom Css-->
+    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+
+    <style>
+        .profileIcon input{
+            display: none;
+        }
+        .userform input{
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!--Mian Body Area Start-->
+
+    <!--Header Here-->
+    <header class="header-section dashboard__header">
+        <div class="container p-0">
+            <div class="header-wrapper">
+                <div class="menu__left__wrap">
+                    <div class="logo-menu px-2">
+                        <a href="{% url 'home' %}" class="logo">
+                            <img src="{% static 'assets/images/vb-logo.png' %}" alt="logo" style="width: 30%;">
+                            <span>VEBET</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="dashboar__wrap">
+                    <div class="items d__text">
+                        <span class="small">Your balance</span>
+                        <h6>{{profile.balance}}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--Header End-->
+
+    <!-- Payment popup -->
+    <div class="popup-cont" id="pop-id">
+        <div class="popup">
+            <i class="fa-solid fa-close clicon" onclick="closePop()"></i>
+            <div class="pop-img">
+                <img src="{% static 'assets/images/transfer.png' %}" alt="">
+                <p>PAYMENT BY TRANSFER</p>
+            </div>
+            <div class="payment">
+                <div class="bank">
+                    <h1>BANK</h1>
+                    <p>Bank Name: Opay</p>
+                    <p>Account Number: 0987654</p>
+                </div>
+                <div class="bitcoin">
+                    <h1>BITCOIN</h1>
+                    <p>Wallet Address: 09876543</p>
+                </div>
+            </div>
+            <form class="submit" action="payment">
+                <!-- <input type="file" name="" id="" style="color: white;"> -->
+                {{profileform.payment}}
+                <button class="cmn--btn2" onclick="">
+                    <span style="color: white;">Upload Payment Receipt</span>
+                </button>
+            </form>
+        </div>
+    </div>
+    <!-- Payment popup ends -->
+    
+    <section class="dashboard__body mt__30 pb-60"> 
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-xxl-3 col-xl-3 col-lg-4">
+                    <div class="dashboard__side__bar">
+                        <ul class="account__menu">
+                            <li>
+                                <a href="" class="active">
+                                    <span class="icons">
+                                        <i class="fa-solid fa-user"></i>
+                                    </span>
+                                    <span>
+                                        Account Settings
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'logout' %}">
+                                    <span class="icons">
+                                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                                    </span>
+                                    <span>
+                                       Logout
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-xxl-9 col-xl-9 col-lg-8">
+                    <div class="dashboard__body__wrap">
+                        <h3 class="account__head mb__30">
+                            Account Settings
+                        </h3>
+                        <div class="row g-4">
+                            <div class="col-xl-4">
+                                <div class="user__box">
+                                    <div class="img__change">
+                                        <img src="{{profile.profile_picture.url}}" alt="profile">
+                                        <form class="icons profileIcon" id="profile-picture" method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <label for="id_profile_picture"><i class="fas fa-pen"></i></label>
+                                            <!-- <input type="file" name="" id="profile" onchange="submitForm()"> -->
+                                            {{profileform.profile_picture}}
+                                            
+                                        </form>
+                                    </div>
+                                    <div class="user__content">
+                                        <h5 class="usertext__one">{{profile.user.username}}</h5>
+                                        <h6 class="usertext__two">UUID:</h6>
+                                        <a href="" class="link">
+                                            {{profile.profile_id}}
+                                        </a>
+                                    </div>
+                                    <div class="user__dated">
+                                        <span class="date">Joined {{profile.user.date_joined}}</span>
+                                        <a href="#0" class="lastlogin">
+                                            Last Login on {{profile.user.last_login}}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-8">
+                                <div class="account__body">
+                                    <div class="account__email mb__30">
+                                        <h5>
+                                            Account Email
+                                        </h5>
+                                        <span class="subtitle">
+                                            Primary Emails
+                                        </span>
+                                        <div class="form__wrap">
+                                            <form action="#" class="userform">
+                                                <!-- <input type="text" placeholder="fixad56534@paxven.com"> -->
+                                                {{userform.email}}
+                                                <i class="icon-lock"></i>
+                                            </form>
+                                        </div>
+                                        <!-- <a href="#0" class="add__email">
+                                            <span><i class="fas fa-pen"></i></span>
+                                            <span>
+                                                Edit email
+                                            </span>
+                                        </a> -->
+                                        <div class="add__email">
+                                            <span class="small">Your balance:</span>
+                                            <h6 style="color: white;">{{profile.balance}}</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--footer Bottom Menu-->
+        <ul class="footer__menu d-lg-none">
+            <li>
+                <a href="{% url 'home' %}" class="d-grid justify-content-center">
+                   <span><i class="fa-solid fa-gift"></i></span>
+                    <span class="texta">Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="#0" class="d-grid justify-content-center" data-bs-toggle="modal" data-bs-target="#betsp">
+                   <span> <i class="fas fa-ticket-alt"></i></span>
+                    <span class="texta">My Bet</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'profile' %}" class="d-grid justify-content-center">
+                   <span> <i class="far fa-user-circle"></i></span>
+                    <span class="texta"> Account</span>
+                </a>
+            </li>
+        </ul>
+        <!--footer Bottom Menu-->
+    </section>
+
+    <!--MyBets Start-->
+    <div class="modal mybets__modal" id="betsp" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog  modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="right__site__section">
+                    <div class="betslip__wrap">
+                        <h5 class="betslip__title">
+                            Betslip
+                        </h5>
+                        <div class="nav" id="nav-tabr" role="tablist">
+                            <button class="nav-link active" id="nav-home-tabr" data-bs-toggle="tab" data-bs-target="#nav-homer" type="button" role="tab"  aria-selected="true">Single</button>
+                        </div>
+                        <div class="tab-content" id="nav-tabContentr">
+                            <div class="tab-pane fade text-white show active " id="nav-homer" role="tabpanel" aria-labelledby="nav-home-tabr" tabindex="0">
+                                {% if request.user.is_authenticated %}
+                                    <div class="multiple__components">
+                                        <div class="bet_head">
+                                        </div>
+                                        <div class="total__odds">
+                                            <div class="total__head">
+                                                <h6 class="odd">
+                                                    Total Odds
+                                                </h6>
+                                                <span class="tot_odd">
+                                                    
+                                                </span>
+                                            </div>
+                                            <div class="wrapper">
+                                                <form class="result" action="" method="POST">
+                                                    {% csrf_token %}
+                                                    <input type="number" id="inputField3" class="live-input stake_inp" name="stake_inp">
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="possible__pay">
+                                            <span style="color: white; font-size: 13px;">Potential Win</span>
+                                            <span style="color: white; font-size: 13px;" id="resultParagraph"></span>
+                                        </div>
+                                        <a class="cmn--btn2 btnhover" onclick="placeBet()">
+                                            <span>Place Bet</span>
+                                        </a>
+                                    </div>
+                                    <!-- <div>
+                                        <p style="text-align: center; font-size: 14px; padding: 10px;">Place your stakes</p>
+                                    </div> -->
+                            {% else %}
+                                <div>
+                                    <p style="text-align: center; font-size: 14px; padding: 10px;">You don't have any bets yet. <a href="{% url 'login' %}" style="color: rgb(255, 124, 124); font-weight: bold;">Sign In</a> to place your stakes</p>
+                                </div>
+                            {% endif %}                             
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--MyBets End-->
+
+
+    <footer class="footer__section pt-60">
+        <div class="container">
+            <div class="footer__bottom">
+                <p class="text-white">
+                        Copyright &copy; 2024, <a href="#0" class="text--base">Vebet</a>
+                </p>
+            </div>
+        </div>
+    </footer> 
+
+    <!--Jquery min js-->
+    <script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+    <!--Bootstrap bundle min js-->
+    <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
+    <!--Magnific Popup js-->
+    <script src="{% static 'assets/js/jquery.magnific-popup.min.js' %}"></script>
+    <!--Owl Carousel min js-->
+    <script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+    <!--nice select min js-->
+    <script src="{% static 'assets/js/jquery.nice-select.min.js' %}"></script>
+    <!--Wow min js-->
+    <script src="{% static 'assets/js/wow.min.js' %}"></script>
+    <!--jquery ui min-->
+    <script src="{% static 'assets/js/jquery-ui.min.js' %}"></script>
+    <!--Api min js-->
+    <script src="{% static 'assets/js/api.js' %}"></script>
+     <!--Font awesome js-->
+     <script src="{% static 'assets/js/all.js' %}"></script>
+    <!--Main js-->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    <!--Custom js-->
+    <script src="{% static 'assets/js/custom.js' %}"></script>
+    
+    <script>
+        let inpId = document.getElementById("id_profile_picture")
+        let idForm = document.getElementById("profile-picture")
+        inpId.addEventListener("change", submitForm)
+        function submitForm(){
+            idForm.submit()
+        }
+    </script>
+</body>
+</html>

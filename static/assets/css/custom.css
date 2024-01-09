@@ -1,0 +1,110 @@
+.stake_inp{
+    width: 100%;
+    border: none;
+    outline: none;
+}
+.stake_inp:focus{
+    color: black;
+}
+.clickable_p:hover, .cros:hover{
+    cursor: pointer;
+}
+.popup-cont{
+    display: flex;
+    justify-content: center;
+    display: none;
+}
+.popup{
+    width: 80%;
+    height: fit-content;
+    position: fixed;
+    top: 8.5%;
+    background-color: rgb(20, 28, 51);
+    z-index: 2000000000;
+    border-radius: 10px;
+    box-shadow: 1px 0px 5px 5px rgba(255, 255, 255, 0.285);
+    padding: 40px 20px;
+}
+.clicon{
+    position: absolute;
+    color: white;
+    font-size: 20px;
+    right: 20px;
+    top: 20px;
+}
+.clicon:hover{
+    cursor: pointer;
+}
+.pop-img{
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid white;
+    padding: 0 0 20px 0;
+    flex-direction: column;
+    align-items: center;
+}
+.pop-img img{
+    width: 20%;
+  
+}
+.pop-img p{
+    color: white;
+    font-weight: bold;
+    margin-top: 20px;
+}
+.payment{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.payment h1, .payment p{
+    color: white;
+}
+.submit{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.submit input{
+    color: white;
+}
+.btnhover:hover{
+    cursor: pointer;
+}
+
+@media (max-width:1350px) {
+    .custom_class2{
+        width: 100% !important;
+    }
+}
+@media (max-width:990px) {
+    .none{
+        display: none;
+    }
+}
+@media (max-width:682px) {
+    .payment{
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    .submit{
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+    .submit input{
+        margin-bottom: 20px;
+    }
+    .bitcoin{
+        margin-top: 20px;
+    }
+}
+@media (max-width:482px) {
+    .custom_class{
+        gap: 32px !important;
+    }
+    .pop-img img{
+        width: 40%;
+    }
+}

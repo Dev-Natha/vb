@@ -1,0 +1,516 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Betting HTML Template</title>
+    <!--Shortcut Icon-->
+    <link rel="icon" href="assets/img/logo/favicon.png">
+    <!--Bootstrap Min Css-->
+    <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+    <!--Macnific Popup Css-->
+    <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+    <!--Owl Carousel min Css-->
+    <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+    <!--Owl theme Default Css-->
+    <link rel="stylesheet" href="{% static 'assets/css/owl.theme.default.css' %}">
+    <!--nice select Css-->
+    <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
+    <!--Glyphter Css-->
+    <link rel="stylesheet" href="{% static 'assets/glyphter-font/css/Glyphter.css' %}">
+    <!--animation Css-->
+    <link rel="stylesheet" href="{% static 'assets/css/animate.css' %}">
+    <!--Fontawsome all min Css-->
+    <link rel="stylesheet" href="{% static 'assets/css/all.min.css' %}">
+    <!--Main custom Css-->
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+    <!--Custom Css-->
+    <link rel="stylesheet" href="{% static 'assets/css/custom.css' %}">
+</head>
+<body>
+   
+
+    <!--Header Here-->
+    <header class="header-section">
+        <div class="container-fluid p-0">
+            <div class="header-wrapper" style="padding: 10px 10px;">
+                <div class="menu__left__wrap">
+                    <div class="logo-menu px-2">
+                        <a href="{% url 'home' %}" class="logo">
+                            <img src="{% static 'assets/images/vb-logo.png' %}" alt="logo" style="width: 40%;">
+                            <span>VEBET</span>
+                        </a>
+                    </div>
+                    <div class="lang d-flex align-items-center px-2">
+                        <div class="header-bar d-lg-none">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    <ul class="main-menu" style="margin-left: -10px;">
+                        <li class="cmn-grp">
+                            {% if request.user.is_authenticated %}
+                            <a href="{% url 'logout' %}" class="cmn--btn">
+                                <span>Log Out</span>
+                            </a>
+                            {% else %}
+                            <a href="{% url 'login' %}" class="cmn--btn">
+                                <span>Sign In</span>
+                            </a>
+                            <a href="{% url 'register' %}" class="cmn--btn2">
+                                <span class="rela">Sign Up</span>
+                            </a>
+                            {% endif %}
+                        </li>
+                    </ul>
+                </div>
+                <div class="mneu-btn-grp">
+                    {% if request.user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="cmn--btn">
+                        <span>Log Out</span>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'login' %}" class="cmn--btn">
+                        <span>Sign In</span>
+                    </a>
+                    <a href="{% url 'register' %}" class="cmn--btn2">
+                        <span class="rela">Sign Up</span>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </header>
+    <!--Header End-->
+
+    <!--Sub-Header Tabs Here-->
+    <section class="main__tab__slide">
+        <ul class="nav nav-tabs" id="myTabmain" role="tablist" style="width: 100%;">
+            <a href="{% url 'home' %}" class="nav-item" role="presentation">
+              <button class="nav-link active" id="main-tab" data-bs-toggle="tab" data-bs-target="#mainTab" type="button" role="tab"  aria-selected="true">
+                <span class="icons"><i class="fa-solid fa-house"></i></span>
+                <span style="margin-top: 5px;">Home</span>
+              </button>
+            </a>
+            <a href="{% url 'profile' %}" class="nav-item none" role="presentation">
+              <button class="nav-link active" id="main-tab" data-bs-toggle="tab" data-bs-target="#mainTab" type="button" role="tab"  aria-selected="true">
+                <span class="icons"><i class="fa-solid fa-user"></i></span>
+                <span style="margin-top: 5px;">Profile</span>
+              </button>
+            </a>
+          </ul>  
+    </section>
+    <!--Sub-Header Tabs Here-->
+    
+    <!-- Payment popup -->
+    <div class="popup-cont" id="pop-id">
+        <div class="popup">
+            <i class="fa-solid fa-close clicon" onclick="closePop()"></i>
+            <div class="pop-img">
+                <img src="{% static 'assets/images/transfer.png' %}" alt="">
+                <p>PAYMENT BY TRANSFER</p>
+                <small style="color: rgb(255, 80, 80);">Your wallet will be funded after admin has approved the transaction</small>
+            </div>
+            <div class="payment">
+                <div class="bank">
+                    <h1>BANK</h1>
+                    <p>Bank Name: Opay</p>
+                    <p>Account Number: 0987654</p>
+                </div>
+                <div class="bitcoin">
+                    <h1>BITCOIN</h1>
+                    <p>Wallet Address: 09876543</p>
+                </div>
+            </div>
+            <form class="submit" action="/payment/" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" name="paymentfile">
+                <button class="cmn--btn2" onclick="">
+                    <span style="color: white;">Upload Payment Receipt</span>
+                </button>
+            </form>
+        </div>
+    </div>
+    <!-- Payment popup ends -->
+    <!--Global Main Body-->
+    <section class="main__body__area"> 
+        <div class="container-fluid p-0">
+            <div class="row g-0">
+                <div class="col-xxl-10 col-xl-9 col-lg-9">
+                    <div class="left__site__section">
+                        <div class="tab-content" id="myTabContentmain">
+                           <!--Global Main Body-->
+                                <div class="popular__events__body">
+                                    <div class="container-fluid p-0">
+                                        <div class="row g-0">
+                                            <div class="col-xxl-2 col-xl-3 col-lg-3">
+                                                <div class="popular__events__left display991">
+                                                    <div class="popular__events__head">
+                                                        <p></p>
+                                                    </div>
+                                                 
+                                                    <div class="prematch__wrap">
+                                                        <div class="tab-content" id="nav-tabContentpre">
+                                                            <div class="tab-pane fade text-white show active" id="nav-homepre" role="tabpanel" aria-labelledby="nav-home-tabpre" tabindex="0">
+                                                              <div class="prematch__scopre">
+                                                                <a href="" class="prescore__items">
+                                                                    <div class="prescore__left">
+                                                                        <span><i class="fa-regular fa-futbol"></i></span>
+                                                                        <span class="score">
+                                                                            Games
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="prescore__right">
+                                                                        <span>{{bet_model.count}}</span>
+                                                                        <span><i class="fa-solid fa-angle-down"></i></span>
+                                                                    </div>
+                                                                </a>
+                                                              </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xxl-10 col-xl-9 col-lg-9">
+                                                <!--Home Page Tabs Here-->
+                                                <div class="tab-pane text-white fade show active" id="mainTab" role="tabpanel" tabindex="0">
+
+                                                    <!--Main body-->
+                                                    <div class="main__body__wrap left__right__space">
+
+                                                        <!--Live__heightlight Here-->
+                                                        <div class="live__heightlight mb__30">
+                                                            <div class="section__title">
+                                                                <h4>
+                                                                    Live Matches
+                                                                </h4>
+                                                            </div>
+                                                            <div class="height__table">
+                                                                <div class="tab-content" id="nav-tabContentheight">
+                                                                    <!--Football-->
+                                                                    <div class="tab-pane fade text-white show active" id="height1" role="tabpanel" aria-labelledby="nav-home-tabpre" tabindex="0">
+                                                                        <div class="main__table custom_class2">
+                                                                            <div class="section__head b__bottom">
+                                                                            </div>
+                                                                            <div class="table__wrap">
+                                                                                <div class="table__items table__pointnone__items">
+                                                                                    <div class="t__items">
+                                                                                    <div class="t__items__left">
+                                                                                          
+                                                                                    </div>
+                                                                                    </div>
+                                                                                    <div class="cart__point">
+                                                                                       
+                                                                                    </div>
+                                                                                    <div class="mart__point__items">
+                                                                                        <a href="#0" class="twing opo twing__right">
+                                                                                            <i class="icon-twer"></i>
+                                                                                        </a>
+                                                                                        <a href="#0" class="mart opo">
+                                                                                            <i class="icon-pmart"></i>
+                                                                                        </a>
+                                                                                        <a href="#0box" class="point__box bg__none">
+                                                                                           1
+                                                                                        </a>
+                                                                                        <a href="#0box" class="point__box bg__none">
+                                                                                           X
+                                                                                        </a>
+                                                                                        <a href="#0box" class="point__box bg__none">
+                                                                                            2
+                                                                                        </a>
+                                                                                    </div>
+                                                                                    
+                                                                                </div>
+                                                                                {% for model in bet_model %}
+                                                                                <p style="font-size: 10px;">{{model.date}}</p>
+                                                                                <div class="table__items b__bottom custom_class">
+                                                                                    <div class="t__items">
+                                                                                    <div class="t__items__left">
+                                                                                            <h6>
+                                                                                                {{model.team1_name}}
+                                                                                            </h6>
+                                                                                            <span class="text">
+                                                                                                {{model.team2_name}}
+                                                                                            </span>
+                                                                                            <p>
+                                                                                                <a>
+                                                                                                    Time
+                                                                                                </a>
+                                                                                                <span>
+                                                                                                    {{model.time}}
+                                                                                                </span>
+                                                                                            </p>
+                                                                                    </div>
+                                                                                    </div>
+                                                                                    <div class="cart__point">
+                                                                                        <span>
+                                                                                            {{model.score1}}
+                                                                                        </span>
+                                                                                        <span>
+                                                                                            {{model.score2}}
+                                                                                        </span>
+                                                                                    </div>
+                                                                                    <div class="mart__point__items">
+                                                                                        <!-- <a href="{% url 'stake' %}?id={{model.id}}&value={{model.home}}&name=home" class="point__box game_link clickable_p" data-id="{{model.id}}" data-value="{{model.home}}" data-name="home">
+                                                                                            {{model.home}}
+                                                                                        </a>
+                                                                                        <a href="{% url 'stake' %}?id={{model.id}}&value={{model.draw}}&name=draw" class="point__box game_link clickable_p" data-id="{{model.id}}" data-value="{{model.draw}}" data-name="draw">
+                                                                                            {{model.draw}}
+                                                                                        </a>
+                                                                                        <a href="{% url 'stake' %}?id={{model.id}}&value={{model.away}}&name=away" class="point__box game_link clickable_p" data-id="{{model.id}}" data-value="{{model.away}}" data-name="away">
+                                                                                            {{model.away}}
+                                                                                        </a> -->
+                                                                                        <a class="point__box game_link clickable_p" data-id="{{model.id}}" data-value="{{model.home}}" data-name="home">
+                                                                                            {{model.home}}
+                                                                                        </a>
+                                                                                        <a class="point__box game_link clickable_p" data-id="{{model.id}}" data-value="{{model.draw}}" data-name="draw">
+                                                                                            {{model.draw}}
+                                                                                        </a>
+                                                                                        <a class="point__box game_link clickable_p" data-id="{{model.id}}" data-value="{{model.away}}" data-name="away">
+                                                                                            {{model.away}}
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                {% endfor %}
+                                                                              
+                                                                                <div class="table__footer">
+                                                                                    
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!--Football-->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!--Live__heightlight End-->
+                                                        
+                                                        <!--Footer Content Here-->
+                                                        <div class="footer__content__section pt-60 pb-60">
+                                                            <div class="footer__content__items">
+                                                                <h5>
+                                                                    Introduction:
+                                                                </h5>
+                                                                <p>
+                                                                    Are you ready to transform your football viewing into a heart-pounding, adrenaline-fueled experience? Look no further than Vebet, the ultimate destination for football enthusiasts seeking to elevate their betting game. With an exclusive focus on the world's most beloved sport, Vebet offers a tailored and immersive platform that brings you closer to the action than ever before.
+                                                                </p>
+                                                            </div>
+                                                            <div class="footer__content__items">
+                                                                <h5>
+                                                                    The Thrill of the Game:
+                                                                </h5>
+                                                                <p>
+                                                                    Vebet isn't just a betting site; it's a celebration of the beautiful game. Immerse yourself in the thrill of football as you explore a comprehensive range of betting options that cover leagues, tournaments, and matches from around the globe. From the electrifying energy of domestic leagues to the prestige of international competitions, Vebet ensures that every kick, goal, and save is an opportunity for you to win big.
+                                                                </p>
+                                                            </div>
+                                                            <div class="footer__content__items">
+                                                                <h5>
+                                                                    User-Friendly Interface:
+                                                                </h5>
+                                                                <p>
+                                                                    Vebet takes pride in its user-friendly interface, designed with football enthusiasts in mind. Navigate effortlessly through a sleek platform that provides instant access to upcoming matches, live events, and in-depth statistics. Whether you're a seasoned bettor or a newcomer to the world of football betting, Vebet ensures that your experience is smooth, intuitive, and enjoyable.
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <!--Footer Content End-->
+
+                                                    </div>
+                                                    <!--Main body-->
+
+                                                    <!--Footer Start-->
+                                                    <footer class="footer__section main__footer__section media991__pb60 pt-50">
+                                                        <div class="container-fluid p-0">                                                            
+                                                            <!--Footer bottom-->
+                                                            <div class="footer__bottom" style="justify-content: center;">
+                                                                <p>
+                                                                    Copyright &copy; 2024 <a href="#0" class="text--base">Vebet</a>
+                                                                </p>
+                                                            </div>
+                                                            <!--Footer bottom-->
+                                                        </div>
+                                                    </footer>
+                                                    <!--Footer End-->
+
+                                                </div>
+                                                <!--Home Page Tabs Here-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <!--Global Main Body-->
+                        </div> 
+                    </div>
+                </div>
+                <div class="col-xxl-2 col-xl-3 col-lg-3">
+                    <div class="right__site__section display991">
+                        <div class="betslip__wrap">
+                            <h5 class="betslip__title">
+                                Betslip
+                            </h5>
+                            <div class="nav" id="nav-taboo" role="tablist">
+                                <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Single</button>
+                            </div>
+                            <div class="tab-content" id="nav-tabContent">
+                                <div class="tab-pane fade text-white show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+                                   {% if request.user.is_authenticated %}
+                                        <div class="multiple__components">
+                                            <div class="bet_head">
+                                               
+                                            </div>
+                                            <div class="total__odds">
+                                                <div class="total__head">
+                                                    <h6 class="odd">
+                                                        Total Odds
+                                                    </h6>
+                                                    <span class="tot_odd">
+                                                        
+                                                    </span>
+                                                </div>
+                                                <div class="wrapper">
+                                                    <form class="result" action="" method="POST">
+                                                        {% csrf_token %}
+                                                        <input type="number" id="inputField1" class="live-input stake_inp" name="stake_inp">
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="possible__pay">
+                                                <span style="color: white; font-size: 13px;">Potential Win</span>
+                                                <span style="color: white; font-size: 13px;" id="resultParagraph"></span>
+                                            </div>
+                                            <a class="cmn--btn2 btnhover" onclick="placeBet()">
+                                                <span>Place Bet</span>
+                                            </a>
+                                        </div>
+                                        <!-- <div>
+                                            <p style="text-align: center; font-size: 14px; padding: 10px;">Place your stakes</p>
+                                        </div> -->
+                                   {% else %}
+                                    <div>
+                                        <p style="text-align: center; font-size: 14px; padding: 10px;">You don't have any bets yet. <a href="{% url 'login' %}" style="color: rgb(255, 124, 124); font-weight: bold;">Sign In</a> to place your stakes</p>
+                                    </div>
+                                   {% endif %}
+                                </div>                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--footer Bottom Menu-->
+        <ul class="footer__menu d-lg-none">
+            <li>
+                <a href="{% url 'home' %}" class="d-grid justify-content-center">
+                   <span><i class="fa-solid fa-gift"></i></span>
+                    <span class="texta">Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="#0" class="d-grid justify-content-center" data-bs-toggle="modal" data-bs-target="#betsp">
+                   <span> <i class="fas fa-ticket-alt"></i></span>
+                    <span class="texta">My Bet</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'profile' %}" class="d-grid justify-content-center">
+                   <span> <i class="far fa-user-circle"></i></span>
+                    <span class="texta"> Account</span>
+                </a>
+            </li>
+        </ul>
+        <!--footer Bottom Menu-->
+    </section>
+    <!--Global Main Body-->
+
+    <!--Mian Body Area Start-->
+    <!--Mian Body Area Start-->
+
+    <!--MyBets Start-->
+    <div class="modal mybets__modal" id="betsp" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog  modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="right__site__section">
+                    <div class="betslip__wrap">
+                        <h5 class="betslip__title">
+                            Betslip
+                        </h5>
+                        <div class="nav" id="nav-tabr" role="tablist">
+                            <button class="nav-link active" id="nav-home-tabr" data-bs-toggle="tab" data-bs-target="#nav-homer" type="button" role="tab"  aria-selected="true">Single</button>
+                        </div>
+                        <div class="tab-content" id="nav-tabContentr">
+                            <div class="tab-pane fade text-white show active " id="nav-homer" role="tabpanel" aria-labelledby="nav-home-tabr" tabindex="0">
+                                {% if request.user.is_authenticated %}
+                                    <div class="multiple__components">
+                                        <div class="bet_head">
+                                        </div>
+                                        <div class="total__odds">
+                                            <div class="total__head">
+                                                <h6 class="odd">
+                                                    Total Odds
+                                                </h6>
+                                                <span class="tot_odd">
+                                                    
+                                                </span>
+                                            </div>
+                                            <div class="wrapper">
+                                                <form class="result" action="" method="POST">
+                                                    {% csrf_token %}
+                                                    <input type="number" id="inputField2" class="live-input stake_inp" name="stake_inp">
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="possible__pay">
+                                            <span style="color: white; font-size: 13px;">Potential Win</span>
+                                            <span style="color: white; font-size: 13px;" id="resultParagraph2"></span>
+                                        </div>
+                                        <a class="cmn--btn2" onclick="placeBet()">
+                                            <span>Place Bet</span>
+                                        </a>
+                                    </div>
+                                    <!-- <div>
+                                        <p style="text-align: center; font-size: 14px; padding: 10px;">Place your stakes</p>
+                                    </div> -->
+                            {% else %}
+                                <div>
+                                    <p style="text-align: center; font-size: 14px; padding: 10px;">You don't have any bets yet. <a href="{% url 'login' %}" style="color: rgb(255, 124, 124); font-weight: bold;">Sign In</a> to place your stakes</p>
+                                </div>
+                            {% endif %}                             
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--MyBets End-->
+
+    <!--Jquery min js-->
+    <script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+    <!--Bootstrap bundle min js-->
+    <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>
+    <!--Magnific Popup js-->
+    <script src="{% static 'assets/js/jquery.magnific-popup.min.js' %}"></script>
+    <!--Owl Carousel min js-->
+    <script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+    <!--nice select min js-->
+    <script src="{% static 'assets/js/jquery.nice-select.min.js' %}"></script>
+    <!--Wow min js-->
+    <script src="{% static 'assets/js/wow.min.js' %}"></script>
+    <!--jquery ui min-->
+    <script src="{% static 'assets/js/jquery-ui.min.js' %}"></script>
+    <!--Api min js-->
+    <script src="{% static 'assets/js/api.js' %}"></script>
+    <!--Font awesome js-->
+    <script src="{% static 'assets/js/all.js' %}"></script>
+    <!--Main js-->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    <!--Custom js-->
+    <script src="{% static 'assets/js/custom.js' %}"></script>
+    
+</body>
+</html>
