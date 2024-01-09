@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sports Betting HTML Template</title>
     <!--Shortcut Icon-->
-    <link rel="icon" href="assets/img/logo/favicon.png">
+    <link rel="icon" href="{% static 'assets/images/vb-logo.png' %}">
     <!--Bootstrap Min Css-->
     <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
     <!--Macnific Popup Css-->
@@ -162,10 +162,6 @@
                                                                         <span class="score">
                                                                             Games
                                                                         </span>
-                                                                    </div>
-                                                                    <div class="prescore__right">
-                                                                        <span>{{bet_model.count}}</span>
-                                                                        <span><i class="fa-solid fa-angle-down"></i></span>
                                                                     </div>
                                                                 </a>
                                                               </div>
